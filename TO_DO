@@ -1,0 +1,11 @@
+PARSING :
+	-checker les arg
+	-checker extension de la map (.cub)
+	-checker les Characteres possibles
+	-checker que la map est fermee
+		-1 murs
+		-0 vide
+		-N S E W pour le perso
+
+RAYCASTING :
+	
