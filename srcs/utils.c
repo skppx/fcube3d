@@ -6,8 +6,21 @@
 /*   By: repinat <repinat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:33:55 by repinat           #+#    #+#             */
-/*   Updated: 2023/02/09 15:49:01 by repinat          ###   ########.fr       */
+/*   Updated: 2023/02/13 15:42:05 by repinat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	free_tab(char **tab)
+{
+	int i;
+
+	i = -1;
+	while (tab[++i])
+	{
+		if (tab[i] != NULL)
+			free(tab[i]);
+	}
+	free(tab);
+}

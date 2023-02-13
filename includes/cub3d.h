@@ -6,7 +6,7 @@
 /*   By: repinat <repinat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:09:52 by repinat           #+#    #+#             */
-/*   Updated: 2023/02/09 16:43:17 by repinat          ###   ########.fr       */
+/*   Updated: 2023/02/13 16:29:10 by repinat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ struct s_vars
 	char	**map;
 };
 
-int	ft_parsing_arg(int ac, char **av);
+int		ft_parsing(int ac, char **av, t_vars *cub);
+void	free_tab(char **tab);
+int		map_size(char **av);
+
 
 
 #endif

@@ -4,6 +4,7 @@ SRC_DIR		=	./srcs/
 INC_DIR		=	./includes/
 SRCS		=	main.c\
 				parsing.c\
+				parsing_2.c\
 				utils.c\
 
 SRC_BASENAME    =	$(addprefix $(SRC_DIR), $(SRCS))
