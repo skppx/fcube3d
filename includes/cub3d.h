@@ -6,7 +6,7 @@
 /*   By: repinat <repinat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:09:52 by repinat           #+#    #+#             */
-/*   Updated: 2023/02/13 16:29:10 by repinat          ###   ########.fr       */
+/*   Updated: 2023/02/20 14:47:58 by repinat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,18 @@ struct s_vars
 	void	*wall_S;
 	void	*wall_E;
 	void	*wall_W;
-	void	*ground;
-	void	*sky;
+	char	*ground;
+	char	*sky;
 	//map
 	char	**map;
+	size_t	size_map;
+	int		count_l;
 };
 
 int		ft_parsing(int ac, char **av, t_vars *cub);
 void	free_tab(char **tab);
-int		map_size(char **av);
+// int		map_size(char **av, t_vars *cub);
+int		closed_map(char	**map, t_vars *cub);
 
 
 

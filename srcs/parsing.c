@@ -6,7 +6,7 @@
 /*   By: repinat <repinat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:33:53 by repinat           #+#    #+#             */
-/*   Updated: 2023/02/13 16:59:07 by repinat          ###   ########.fr       */
+/*   Updated: 2023/02/20 12:41:01 by repinat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int	check_char(char **map)
 		j = -1;
 		while (map[i][++j])
 		{
-			if (!(c == '0' || c == '1' || c == 'N' || c == 'S'
-				|| c == 'W' || c == 'E' || c == ' '))
+			if (!(map[i][j] == '0' || map[i][j] == '1' || map[i][j] == 'N' || map[i][j] == 'S'
+				|| map[i][j] == 'W' || map[i][j] == 'E' || map[i][j] == ' '))
 				return (0);
 		}
 	}
@@ -91,7 +91,7 @@ int	ft_parsing(int ac, char **av, t_vars *cub)
 		return (0);
 	if (!one_player(cub->map))
 		return (0);
-	if (!closed_map(cub->map))
+	if (!closed_map(cub->map, cub))
 		return (0);
 	return (1);
 }

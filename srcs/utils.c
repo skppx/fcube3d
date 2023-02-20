@@ -6,7 +6,7 @@
 /*   By: repinat <repinat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:33:55 by repinat           #+#    #+#             */
-/*   Updated: 2023/02/13 15:42:05 by repinat          ###   ########.fr       */
+/*   Updated: 2023/02/20 15:28:05 by repinat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,4 @@ void	free_tab(char **tab)
 		if (tab[i] != NULL)
 			free(tab[i]);
 	}
-	free(tab);
 }
