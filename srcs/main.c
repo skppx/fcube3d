@@ -6,7 +6,7 @@
 /*   By: repinat <repinat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:09:16 by repinat           #+#    #+#             */
-/*   Updated: 2023/02/20 15:26:56 by repinat          ###   ########.fr       */
+/*   Updated: 2023/02/21 15:36:26 by repinat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	sorting_data(char **map, t_vars *cub)
 	int	j;
 	
 	i = 0;
-	while (i < 7)
+	while (i < 7 && (size_t)i < cub->size_map)
 	{
 		j = 0;
 		while (map[i][j] == ' ')
@@ -127,12 +127,11 @@ void	open_file(char **av, t_vars *cub)
 		free(line);
 	}
 	cub->size_map = size - 1;
-	cub->map = malloc((size + 1) * sizeof(char *));
 	cub->map = ft_split(tmp, '\n');
 	free(tmp);
 	close(fd);
 
-//	affichage test
+	// affichage test
 
 	// int i = 0;
 	// while (cub->map[i] != NULL)
@@ -150,7 +149,7 @@ void	set_map(t_vars *cub)
 	int		j;
 
 	cub->size_map -= 6;
-	new_map = malloc(cub->size_map * sizeof(char *));
+	new_map = malloc((cub->size_map + 2) * sizeof(char *));
 	i = -1;
 	j = 5;
 	while ((size_t)++i < (cub->size_map + 1))
@@ -165,7 +164,6 @@ void	set_map(t_vars *cub)
 		printf("%s\n", cub->map[i]);
 		i++;
 	}
-	printf("\n\n");
 }
 
 int main(int ac, char **av)
@@ -173,8 +171,8 @@ int main(int ac, char **av)
 	t_vars	cub;
 	
 	(void)ac;
-	cub.count_l = 0;
 	open_file(av, &cub);
+	cub.count_l = 0;
 	if (!(sorting_data(cub.map, &cub)))
 	{
 		printf("ERRRRROR\n");
@@ -186,10 +184,15 @@ int main(int ac, char **av)
 	{
 		printf("Error\n");
 		free_tab(cub.map);
+		free(cub.wall_N);
+		free(cub.wall_S);
+		free(cub.wall_E);
+		free(cub.wall_W);
+		free(cub.ground);
+		free(cub.sky);
 		return (0);
 	}
 	free_tab(cub.map);
-
 	free(cub.wall_N);
 	free(cub.wall_S);
 	free(cub.wall_E);

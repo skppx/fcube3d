@@ -6,7 +6,7 @@
 /*   By: repinat <repinat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:58:01 by repinat           #+#    #+#             */
-/*   Updated: 2023/02/20 13:58:11 by repinat          ###   ########.fr       */
+/*   Updated: 2023/02/21 15:42:18 by repinat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,9 @@ int	check_side_2(char **map, t_vars *cub)
 
 int	check_space_2(char **map, size_t i, size_t j, t_vars *cub)
 {
-	if (i < cub->size_map && map[i + 1][j] == '0')
+	// printf("%ld\n", cub->size_map);
+	//ne fonctionne pas tres bien
+	if (i <= cub->size_map && map[i + 1][j] == '0')
 		return (0);
 	if (i > 0 && map[i - 1][j] == '0')
 		return (0);
@@ -92,11 +94,11 @@ int	check_space_2(char **map, size_t i, size_t j, t_vars *cub)
 		return (0);
 	if (j > 0 && map[i][j - 1] == '0')
 		return (0);
-	if (i < cub->size_map && j < ft_strlen(map[i]) && map[i + 1][j + 1] == '0')
+	if (i <= cub->size_map && j < ft_strlen(map[i]) && map[i + 1][j + 1] == '0')
 		return (0);
 	if (i > 0 && j < ft_strlen(map[i]) && map[i - 1][j + 1] == '0')
 		return (0);
-	if (i < cub->size_map && j > 0 && map[i + 1][j - 1] == '0')
+	if (i <= cub->size_map && j > 0 && map[i + 1][j - 1] == '0')
 		return (0);
 	if (i > 0 && j > 0 && map[i - 1][j - 1] == '0')
 		return (0);
