@@ -6,6 +6,7 @@ SRCS		=	main.c\
 				parsing.c\
 				parsing_2.c\
 				utils.c\
+				raycasting.c\
 
 SRC_BASENAME    =	$(addprefix $(SRC_DIR), $(SRCS))
 OBJS            =	$(SRC_BASENAME:.c=.o)
@@ -20,7 +21,7 @@ all	:		$(NAME)
 $(NAME)	:	$(OBJS)
 			make -C $(MLX_DIR)
 			make -C ./libft/
-			$(CC) $(FLAGS) -o $(NAME) $(OBJS) -L $(MLX_DIR) -L./libft/ -lft -lmlx -lbsd -lXext -lX11
+			$(CC) $(FLAGS) -o $(NAME) $(OBJS) -L $(MLX_DIR) -L./libft/ -lft -lmlx -lbsd -lXext -lX11 -lm
 
 clean	:
 			rm -rf $(OBJS)

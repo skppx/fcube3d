@@ -6,7 +6,7 @@
 /*   By: repinat <repinat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:33:53 by repinat           #+#    #+#             */
-/*   Updated: 2023/02/20 12:41:01 by repinat          ###   ########.fr       */
+/*   Updated: 2023/02/23 16:04:51 by repinat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,15 @@ int	ft_parsing(int ac, char **av, t_vars *cub)
 	if (!check_extension(av[1]))
 		return (0);
 	if (!check_char(cub->map))
+	{
+		ft_putstr_fd("Error, bad character(s) in map\n", 1);
 		return (0);
+	}
 	if (!one_player(cub->map))
+	{
+	
 		return (0);
+	}
 	if (!closed_map(cub->map, cub))
 		return (0);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: repinat <repinat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:09:16 by repinat           #+#    #+#             */
-/*   Updated: 2023/02/21 15:36:26 by repinat          ###   ########.fr       */
+/*   Updated: 2023/02/23 17:31:27 by repinat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	*nord_texture(char *str, int i, t_vars *cub)
 	while (str[i] && str[i] != '.')
 		i++;
 	dup = ft_strdup(&str[i]);
+	// printf("%s\n", dup);
 	return (dup);
 }
 
@@ -31,6 +32,7 @@ void	*south_texture(char *str, int i, t_vars *cub)
 	while (str[i] && str[i] != '.')
 		i++;
 	dup = ft_strdup(&str[i]);
+	// printf("%s\n", dup);
 	return (dup);
 }
 
@@ -42,6 +44,7 @@ void	*west_texture(char *str, int i, t_vars *cub)
 	while (str[i] && str[i] != '.')
 		i++;
 	dup = ft_strdup(&str[i]);
+	// printf("%s\n", dup);
 	return (dup);
 }
 
@@ -53,6 +56,7 @@ void	*east_texture(char *str, int i, t_vars *cub)
 	while (str[i] && str[i] != '.')
 		i++;
 	dup = ft_strdup(&str[i]);
+	// printf("%s\n", dup);
 	return (dup);
 }
 
@@ -64,6 +68,7 @@ void	*ground_rgb(char *str, int i, t_vars *cub)
 	while (str[i] && !(ft_isdigit(str[i])))
 		i++;
 	dup = ft_strdup(&str[i]);
+	// printf("%s\n", dup);
 	return (dup);
 }
 
@@ -75,6 +80,7 @@ void	*sky_rgb(char *str, int i, t_vars *cub)
 	while (str[i] && !(ft_isdigit(str[i])))
 		i++;
 	dup = ft_strdup(&str[i]);
+	// printf("%s\n", dup);
 	return (dup);
 }
 
@@ -175,30 +181,62 @@ int main(int ac, char **av)
 	cub.count_l = 0;
 	if (!(sorting_data(cub.map, &cub)))
 	{
-		printf("ERRRRROR\n");
-		free_tab(cub.map);
-		return (0);
+		// ft_putstr_fd("Error, too less informations\n", 1);
+		// free_tab(cub.map);
+		// return (0);
 	}
 	set_map(&cub);
 	if (!ft_parsing(ac, av, &cub))
 	{
-		printf("Error\n");
-		free_tab(cub.map);
-		free(cub.wall_N);
-		free(cub.wall_S);
-		free(cub.wall_E);
-		free(cub.wall_W);
-		free(cub.ground);
-		free(cub.sky);
-		return (0);
+		// ft_free_all(&cub);
+		// return (0);
 	}
-	free_tab(cub.map);
-	free(cub.wall_N);
-	free(cub.wall_S);
-	free(cub.wall_E);
-	free(cub.wall_W);
-	free(cub.ground);
-	free(cub.sky);
+	// ft_free_all(&cub);
 
+/*----------------------------------------------------------*/
+
+	//main de phabets
+
+	t_game game;
+
+	game.posX = 7;
+	game.posY = 7;
+	game.dirX = -1;
+	game.dirY = 0;
+	game.planeX = 0;
+	game.planeY = 0.66;
+
+	game.mlx = mlx_init();
+	game.texture = malloc(sizeof(int *) * 4);
+	for (int i = 0; i < 4; i++)
+	{
+		game.texture[i] = malloc(sizeof(int) * (64 * 64));
+		for (int j = 0; j < 64 * 64; j++)
+		{
+			game.texture[i][j] = 0;
+		}
+	}
+	load_all_texture(&game);
+	game.mlx_win = mlx_new_window(game.mlx, 640, 480, "Cub3d");
+	//while(1)
+	//{
+		/*
+		double oldDirX = game.dirX;
+		game.dirX = game.dirX * cos(-100) - game.dirY * sin(-100);
+		game.dirY = oldDirX * sin(-100) + game.dirY * cos(-100);
+		double oldPlaneX = game.planeX;
+		game.planeX = game.planeX * cos(-100) - game.planeY * sin(-100);
+		game.planeY = oldPlaneX * sin(-100) + game.planeY * cos(-100);*/
+//	}
+//	mlx_loop_hook(game.mlx, raycasting, game);
+	game.img.img = mlx_new_image(game.mlx, 640, 480);
+	game.img.data = (int *)mlx_get_data_addr(game.img.img, &game.img.bpp, &game.img.size_l, &game.img.endian);
+	render_frame(game, &cub);
+	mlx_hook(game.mlx_win, 2, 1L<<0, player_move, &game);
+	mlx_loop(game.mlx);
+
+/*----------------------------------------------------------*/
+	
+	ft_free_all(&cub);
 	return (0);
 }

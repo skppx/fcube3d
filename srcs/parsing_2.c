@@ -6,7 +6,7 @@
 /*   By: repinat <repinat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:58:01 by repinat           #+#    #+#             */
-/*   Updated: 2023/02/21 15:42:18 by repinat          ###   ########.fr       */
+/*   Updated: 2023/02/23 16:33:07 by repinat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,24 +118,32 @@ int	check_space(char **map, t_vars *cub)
 		{
 			if (map[i][j] == ' ')
 			{
+				// printf("%s\n", map[i]);
 				if (!check_space_2(map, (size_t)i, (size_t)j, cub))
 					return (0);
 			}
 		}
 		i++;
 	}
+	printf("i = %d\n", i);
 	return (1);
 }
 
 int	closed_map(char	**map, t_vars *cub)
 {
-	if (!check_top_bot(map))
+	if (!check_top_bot(map) || !check_side(map, cub)
+		|| !check_side_2(map, cub) || !check_space(map, cub))
+	{
+		ft_putstr_fd("Error, map not closed\n", 1);
 		return (0);
-	if (!check_side(map, cub))
-		return (0);
-	if (!check_side_2(map, cub))
-		return (0);
-	if (!check_space(map, cub))
-		return (0);
+	}
+	// if (!check_top_bot(map))
+	// 	return (0);
+	// if (!check_side(map, cub))
+	// 	return (0);
+	// if (!check_side_2(map, cub))
+	// 	return (0);
+	// if (!check_space(map, cub))
+	// 	return (0);
 	return (1);
 }
