@@ -6,7 +6,7 @@
 /*   By: repinat <repinat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:09:16 by repinat           #+#    #+#             */
-/*   Updated: 2023/02/23 17:31:27 by repinat          ###   ########.fr       */
+/*   Updated: 2023/03/02 16:44:22 by phabets          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,11 +200,12 @@ int main(int ac, char **av)
 	t_game game;
 
 	game.posX = 7;
-	game.posY = 7;
+	game.posY = 2;
 	game.dirX = -1;
 	game.dirY = 0;
 	game.planeX = 0;
 	game.planeY = 0.66;
+	game.cub = &cub;
 
 	game.mlx = mlx_init();
 	game.texture = malloc(sizeof(int *) * 4);
@@ -231,7 +232,7 @@ int main(int ac, char **av)
 //	mlx_loop_hook(game.mlx, raycasting, game);
 	game.img.img = mlx_new_image(game.mlx, 640, 480);
 	game.img.data = (int *)mlx_get_data_addr(game.img.img, &game.img.bpp, &game.img.size_l, &game.img.endian);
-	render_frame(game, &cub);
+	render_frame(game);
 	mlx_hook(game.mlx_win, 2, 1L<<0, player_move, &game);
 	mlx_loop(game.mlx);
 

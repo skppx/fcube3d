@@ -11,7 +11,7 @@ SRCS		=	main.c\
 SRC_BASENAME    =	$(addprefix $(SRC_DIR), $(SRCS))
 OBJS            =	$(SRC_BASENAME:.c=.o)
 CC				=	gcc
-FLAGS			=	-Wall -Wextra -Werror -I $(MLX_DIR) -I $(INC_DIR) -I ./libft/
+FLAGS			=	-Wall -Wextra -Werror -fsanitize=address -g3 -I $(MLX_DIR) -I $(INC_DIR) -I ./libft/
 
 .c.o	:
 			$(CC) $(FLAGS) -Imlx -c $< -o $@

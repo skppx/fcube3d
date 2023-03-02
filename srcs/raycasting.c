@@ -6,7 +6,7 @@
 /*   By: repinat <repinat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:56:44 by repinat           #+#    #+#             */
-/*   Updated: 2023/02/23 17:03:12 by repinat          ###   ########.fr       */
+/*   Updated: 2023/03/02 16:48:20 by phabets          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft_draw(t_game *game)
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->img.img, 0, 0);
 }
 
-void	render_frame(t_game game, t_vars *cub)
+void	render_frame(t_game game)
 {
 		mlx_clear_window(game.mlx, game.mlx_win);
 		
@@ -107,6 +107,11 @@ void	render_frame(t_game game, t_vars *cub)
 			}
 			while(hit == 0)
 			{
+/*				printf("-------------------\n");
+				printf("%i\n",hit);
+				printf("%i\n",game.mapX);
+				printf("%i\n",game.mapY);
+				printf("%c\n",game.cub->map[game.mapX][game.mapY]);*/
 				if(game.sideDistX < game.sideDistY)
 				{
 					game.sideDistX += game.deltaDistX;
@@ -119,9 +124,12 @@ void	render_frame(t_game game, t_vars *cub)
 					game.mapY += stepY;
 					side = 1;
 				}
-				if(cub->map[game.mapX][game.mapY] > 0)
+//				printf("hit?");
+				if(game.cub->map[game.mapX][game.mapY] != '0')
 					hit = 1;
 			}
+//			printf("final : %c\n",game.cub->map[game.mapX][game.mapY]);
+//			printf("------------\n");
 			//fish eye effect
 			/*
 			if (side == 0)
@@ -150,7 +158,8 @@ void	render_frame(t_game game, t_vars *cub)
 			if(side == 1) {color = color / 2;}
 			verLine(&game, x, drawStart, drawEnd, color);*/
 
-			int	texNum = cub->map[game.mapX][game.mapY];
+			int	texNum = (game.cub->map[game.mapX][game.mapY]) - 48;
+			//printf("%i\n", texNum);
 			double wallX;
 			if (side == 0)
 				wallX = game.posY + perpWallDist * game.rayDirY;
@@ -170,6 +179,10 @@ void	render_frame(t_game game, t_vars *cub)
 			{
 				int texY = (int)texPos & (63);
 				texPos += step;
+				/*printf("oui%i\n", texY);
+				printf("%i\n", texX);
+				printf("%i\n", texNum);
+				printf("%i\n", game.texture[1][2]);*/
 				int color = game.texture[texNum][64 * texY + texX];
 				if (side == 1)
 					color = (color >> 1) & 8355711;
@@ -180,7 +193,7 @@ void	render_frame(t_game game, t_vars *cub)
 		ft_draw(&game);
 }
 
-int	player_move(int keycode, t_game *game, t_vars *cub)
+int	player_move(int keycode, t_game *game)
 {
 	double rotspeed = 0.059400f;
 
@@ -190,7 +203,7 @@ int	player_move(int keycode, t_game *game, t_vars *cub)
 	{
 		game->posX += (game->dirX / 10);
 		game->posY += (game->dirY / 10);
-		render_frame(*game, cub);
+		render_frame(*game);
 	}
 	else if (keycode == 65361)//<- rotate right
 	{
@@ -200,27 +213,27 @@ int	player_move(int keycode, t_game *game, t_vars *cub)
 		double oldPlaneX = game->planeX;
 		game->planeX = game->planeX * cos(rotspeed) - game->planeY * sin(rotspeed);
 		game->planeY = oldPlaneX * sin(rotspeed) + game->planeY * cos(rotspeed);
-		render_frame(*game, cub);
+		render_frame(*game);
 	}
 
 	else if (keycode == 115)//backward S
 	{
 		game->posX -= (game->dirX / 10);
 		game->posY -= (game->dirY / 10);
-		render_frame(*game, cub);
+		render_frame(*game);
 	}
 	else if (keycode == 100)//right D
 	{
 		game->posX += (game->dirY / 10);
 		game->posY -= (game->dirX / 10);
-		render_frame(*game, cub);
+		render_frame(*game);
 	}
 	
 	else if (keycode == 97)//left D
 	{
 		game->posX -= (game->dirY / 10);
 		game->posY += (game->dirX / 10);
-		render_frame(*game, cub);
+		render_frame(*game);
 	}
 
 	else if (keycode == 65363)//-> rotate right
@@ -231,10 +244,8 @@ int	player_move(int keycode, t_game *game, t_vars *cub)
 		double oldPlaneX = game->planeX;
 		game->planeX = game->planeX * cos(-rotspeed) - game->planeY * sin(-rotspeed);
 		game->planeY = oldPlaneX * sin(-rotspeed) + game->planeY * cos(-rotspeed);
-		render_frame(*game, cub);
+		render_frame(*game);
 	}
-	else
-		printf("%i\n", keycode);
 
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: repinat <repinat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:09:52 by repinat           #+#    #+#             */
-/*   Updated: 2023/02/23 17:02:13 by repinat          ###   ########.fr       */
+/*   Updated: 2023/03/02 16:47:20 by phabets          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,21 @@ typedef struct s_img
 	int		img_height;
 }		t_img;
 
+typedef	struct s_vars
+{
+	// textures
+	void	*wall_N;
+	void	*wall_S;
+	void	*wall_E;
+	void	*wall_W;
+	char	*ground;
+	char	*sky;
+	//map
+	char	**map;
+	size_t	size_map;
+	int		count_l;
+}	t_vars;
+
 typedef struct s_game
 {
 	void	*mlx;
@@ -59,22 +74,9 @@ typedef struct s_game
 	double deltaDistX;
 	double deltaDistY;
 	t_img	img;
+	t_vars	*cub;
 }		t_game;
 
-typedef	struct s_vars
-{
-	// textures
-	void	*wall_N;
-	void	*wall_S;
-	void	*wall_E;
-	void	*wall_W;
-	char	*ground;
-	char	*sky;
-	//map
-	char	**map;
-	size_t	size_map;
-	int		count_l;
-}	t_vars;
 
 int		ft_parsing(int ac, char **av, t_vars *cub);
 void	free_tab(char **tab);
@@ -85,7 +87,7 @@ void	load_texture(t_game *game, int *texture, char *path, t_img *img);
 void	load_all_texture(t_game *game);
 void	verLine(t_game *info, int x, int y1, int y2, int color);
 void	ft_draw(t_game *game);
-void	render_frame(t_game game, t_vars *cub);
-int		player_move(int keycode, t_game *game, t_vars *cub);
+void	render_frame(t_game game);
+int		player_move(int keycode, t_game *game);
 
 #endif
