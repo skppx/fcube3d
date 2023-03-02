@@ -6,7 +6,7 @@
 /*   By: repinat <repinat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 15:09:52 by repinat           #+#    #+#             */
-/*   Updated: 2023/03/02 16:47:20 by phabets          ###   ########.fr       */
+/*   Updated: 2023/03/02 17:11:45 by phabets          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,6 @@ void	verLine(t_game *info, int x, int y1, int y2, int color);
 void	ft_draw(t_game *game);
 void	render_frame(t_game game);
 int		player_move(int keycode, t_game *game);
+void	find_pos(t_vars *cub, t_game *game);
 
 #endif

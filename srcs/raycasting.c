@@ -6,11 +6,36 @@
 /*   By: repinat <repinat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:56:44 by repinat           #+#    #+#             */
-/*   Updated: 2023/03/02 16:48:20 by phabets          ###   ########.fr       */
+/*   Updated: 2023/03/02 17:17:42 by phabets          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void    find_pos(t_vars *cub, t_game *game)
+{
+    int    i;
+    int    j;
+
+    i = 0;
+    while(cub->map[i])
+    {
+        j = 0;
+        while (cub->map[i][j])
+        {
+            if (cub->map[i][j] == 'N' || cub->map[i][j] == 'E'
+            || cub->map[i][j] == 'S' || cub->map[i][j] == 'W')
+                break ;
+            j++;
+        }
+        if (cub->map[i][j] == 'N' || cub->map[i][j] == 'E'
+            || cub->map[i][j] == 'S' || cub->map[i][j] == 'W')
+                break ;
+        i++;
+    }
+    game->posX = i;
+    game->posY = j;
+}
 
 void	load_texture(t_game *game, int *texture, char *path, t_img *img)
 {
@@ -158,7 +183,6 @@ void	render_frame(t_game game)
 			if(side == 1) {color = color / 2;}
 			verLine(&game, x, drawStart, drawEnd, color);*/
 
-			int	texNum = (game.cub->map[game.mapX][game.mapY]) - 48;
 			//printf("%i\n", texNum);
 			double wallX;
 			if (side == 0)
@@ -183,7 +207,7 @@ void	render_frame(t_game game)
 				printf("%i\n", texX);
 				printf("%i\n", texNum);
 				printf("%i\n", game.texture[1][2]);*/
-				int color = game.texture[texNum][64 * texY + texX];
+				int color = game.texture[1][64 * texY + texX];
 				if (side == 1)
 					color = (color >> 1) & 8355711;
 				game.buf[y][x] = color;
