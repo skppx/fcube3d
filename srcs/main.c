@@ -234,7 +234,9 @@ int main(int ac, char **av)
 	game.img.img = mlx_new_image(game.mlx, 640, 480);
 	game.img.data = (int *)mlx_get_data_addr(game.img.img, &game.img.bpp, &game.img.size_l, &game.img.endian);
 	render_frame(game);
-	mlx_hook(game.mlx_win, 2, 1L<<0, player_move, &game);
+	mlx_hook(game.mlx_win, 2, 1L<<0, &player_move_press, &game);
+	mlx_hook(game.mlx_win, 3, 1L<<1, &player_move_release, &game);
+	mlx_loop_hook(game.mlx, &player_move, &game);
 	mlx_loop(game.mlx);
 
 /*----------------------------------------------------------*/

@@ -55,6 +55,13 @@ typedef struct s_game
 	void	*mlx_win;
 	void	*win;
 
+	int		s_right;
+	int		s_left;
+	int		forward;
+	int		backward;
+	int		r_right;
+	int		r_left;
+
 	double posX;
 	double posY;
 	double dirX;
@@ -88,7 +95,9 @@ void	load_all_texture(t_game *game);
 void	verLine(t_game *info, int x, int y1, int y2, int color);
 void	ft_draw(t_game *game);
 void	render_frame(t_game game);
-int		player_move(int keycode, t_game *game);
+int		player_move(t_game *game);
+int		player_move_press(int keycode, t_game *game);
+int		player_move_release(int keycode, t_game *game);
 void	find_pos(t_vars *cub, t_game *game);
 
 #endif

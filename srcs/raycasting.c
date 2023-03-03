@@ -207,9 +207,9 @@ void	render_frame(t_game game)
 				printf("%i\n", texX);
 				printf("%i\n", texNum);
 				printf("%i\n", game.texture[1][2]);*/
-				int color = game.texture[1][64 * texY + texX];
+				int color = game.texture[2][64 * texY + texX];
 				if (side == 1)
-					color = (color >> 1) & 8355711;
+					color = game.texture[1][64 * texY + texX];
 				game.buf[y][x] = color;
 				game.re_buf = 1;
 			}
@@ -217,19 +217,53 @@ void	render_frame(t_game game)
 		ft_draw(&game);
 }
 
-int	player_move(int keycode, t_game *game)
+int player_move_press(int keycode, t_game *game)
 {
-	double rotspeed = 0.059400f;
 
 	if (keycode == 65307)
 		exit(0);
-	else if (keycode == 119)//forward W
+	if (keycode == 119)
+		game->forward = 1;
+	else if (keycode == 115)
+		game->backward = 1;
+	if (keycode == 100)
+		game->s_right = 1;
+	else if (keycode == 97)
+		game->s_left = 1;
+	if (keycode == 65361)
+		game->r_right = 1;
+	else if (keycode == 65363)
+		game->r_left = 1;
+	return (0);
+}
+
+int player_move_release(int keycode, t_game *game)
+{
+	if (keycode == 119)
+		game->forward = 0;
+	else if (keycode == 115)
+		game->backward = 0;
+	else if (keycode == 100)
+		game->s_right = 0;
+	else if (keycode == 97)
+		game->s_left = 0;
+	else if (keycode == 65361)
+		game->r_right = 0;
+	else if (keycode == 65363)
+		game->r_left = 0;
+	return (0);
+}
+
+int	player_move(t_game *game)
+{
+	double rotspeed = 0.019400f;
+	if (game->forward)//forward W
 	{
-		game->posX += (game->dirX / 10);
-		game->posY += (game->dirY / 10);
+		game->posX += (game->dirX / 50);
+		game->posY += (game->dirY / 50);
 		render_frame(*game);
 	}
-	else if (keycode == 65361)//<- rotate right
+	if (game->r_right)//<- rotate right
 	{
 		double oldDirX = game->dirX;
 		game->dirX = game->dirX * cos(rotspeed) - game->dirY * sin(rotspeed);
@@ -240,27 +274,27 @@ int	player_move(int keycode, t_game *game)
 		render_frame(*game);
 	}
 
-	else if (keycode == 115)//backward S
+	if (game->backward)//backward S
 	{
-		game->posX -= (game->dirX / 10);
-		game->posY -= (game->dirY / 10);
+		game->posX -= (game->dirX / 50);
+		game->posY -= (game->dirY / 50);
 		render_frame(*game);
 	}
-	else if (keycode == 100)//right D
+	if (game->s_right)//right D
 	{
-		game->posX += (game->dirY / 10);
-		game->posY -= (game->dirX / 10);
+		game->posX += (game->dirY / 50);
+		game->posY -= (game->dirX / 50);
 		render_frame(*game);
 	}
 	
-	else if (keycode == 97)//left D
+	if (game->s_left)//left D
 	{
-		game->posX -= (game->dirY / 10);
-		game->posY += (game->dirX / 10);
+		game->posX -= (game->dirY / 50);
+		game->posY += (game->dirX / 50);
 		render_frame(*game);
 	}
 
-	else if (keycode == 65363)//-> rotate right
+	if (game->r_left)//-> rotate right
 	{
 		double oldDirX = game->dirX;
 		game->dirX = game->dirX * cos(-rotspeed) - game->dirY * sin(-rotspeed);
