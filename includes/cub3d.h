@@ -34,15 +34,24 @@ typedef struct s_img
 	int		img_height;
 }		t_img;
 
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		*bits_per_pixel;
+	int		*line_length;
+	int		endian;
+}		t_data;
+
 typedef	struct s_vars
 {
 	// textures
-	void	*wall_N;
-	void	*wall_S;
-	void	*wall_E;
-	void	*wall_W;
-	char	*ground;
-	char	*sky;
+	char	*wall_N;
+	char	*wall_S;
+	char	*wall_E;
+	char	*wall_W;
+	int		ground;
+	int		sky;
 	//map
 	char	**map;
 	size_t	size_map;
@@ -99,5 +108,6 @@ int		player_move(t_game *game);
 int		player_move_press(int keycode, t_game *game);
 int		player_move_release(int keycode, t_game *game);
 void	find_pos(t_vars *cub, t_game *game);
+int		rgb_to_hex(char **rgb);
 
 #endif

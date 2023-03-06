@@ -54,10 +54,10 @@ void	load_texture(t_game *game, int *texture, char *path, t_img *img)
 void load_all_texture(t_game *game)
 {
 	t_img img;
-	load_texture(game, game->texture[0], "texture/colorstone.xpm", &img);
-	load_texture(game, game->texture[1], "texture/eagle.xpm", &img);
-	load_texture(game, game->texture[2], "texture/greystone.xpm", &img);
-	load_texture(game, game->texture[3], "texture/redbrick.xpm", &img);
+	load_texture(game, game->texture[0], game->cub->wall_N, &img);
+	load_texture(game, game->texture[1], game->cub->wall_S, &img);
+	load_texture(game, game->texture[2], game->cub->wall_W, &img);
+	load_texture(game, game->texture[3], game->cub->wall_E, &img);
 }
 
 void	verLine(t_game *info, int x, int y1, int y2, int color)
@@ -71,6 +71,21 @@ void	verLine(t_game *info, int x, int y1, int y2, int color)
 		y++;
 	}
 }
+
+/*
+void	ft_pixel_put(t_data *data, int x, int y, int color)
+{
+	char *dst;
+
+	dst = data->addr + (y *data->line_length + x * (data->bits_pre_pixel / 8));
+	*(unsigned int*)dst = color;
+}
+
+void draw_floor_cieling(int color, t_game *game)
+{
+	t_data img;
+
+	img.img = mlx_new_image*/
 
 void	ft_draw(t_game *game)
 {
@@ -87,12 +102,19 @@ void	ft_draw(t_game *game)
 void	render_frame(t_game game)
 {
 		mlx_clear_window(game.mlx, game.mlx_win);
-		
-		for (int i = 0; i < 480; i++)
+		for (int i = 0; i < 480 / 2; i++)
 		{
 			for (int j = 0; j < 640; j++)
 			{
-				game.buf[i][j] = 0;
+				game.buf[i][j] = game.cub->sky; // sky
+			}
+		}
+		
+		for (int i = 480 / 2; i < 480; i++)
+		{
+			for (int j = 0; j < 640; j++)
+			{
+				game.buf[i][j] = game.cub->ground;  // ground
 			}
 		}
 
@@ -194,7 +216,7 @@ void	render_frame(t_game game)
 			int texX = (int)(wallX * 64.0f);
 			if (side == 0 && game.rayDirX > 0)
 				texX = 64 - texX - 1;
-			if (side == 1 && game.rayDirX < 0)
+			if (side == 1 && game.rayDirY < 0)
 				texX = 64 - texX - 1;
 
 			double step = 1.0 * 64 / lineHeight;
@@ -207,9 +229,15 @@ void	render_frame(t_game game)
 				printf("%i\n", texX);
 				printf("%i\n", texNum);
 				printf("%i\n", game.texture[1][2]);*/
-				int color = game.texture[2][64 * texY + texX];
-				if (side == 1)
+				int color;
+				if (game.rayDirX < 0 && side == 0)
+					color = game.texture[0][64 * texY + texX];
+				else if (game.rayDirX > 0 && side == 0)
 					color = game.texture[1][64 * texY + texX];
+				else if (side == 1 && game.rayDirY < 0)
+					color = game.texture[2][64 * texY + texX];
+				else
+					color = game.texture[3][64 * texY + texX];
 				game.buf[y][x] = color;
 				game.re_buf = 1;
 			}

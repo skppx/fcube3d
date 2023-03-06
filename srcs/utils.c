@@ -19,8 +19,6 @@ void	ft_free_all(t_vars *cub)
 	free(cub->wall_S);
 	free(cub->wall_E);
 	free(cub->wall_W);
-	free(cub->ground);
-	free(cub->sky);
 }
 
 void	ft_free_p(char *str)
