@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void	*nord_texture(char *str, int i, t_vars *cub)
+char	*nord_texture(char *str, int i, t_vars *cub)
 {
 	char	*dup;
 
@@ -24,7 +24,7 @@ void	*nord_texture(char *str, int i, t_vars *cub)
 	return (dup);
 }
 
-void	*south_texture(char *str, int i, t_vars *cub)
+char	*south_texture(char *str, int i, t_vars *cub)
 {
 	char	*dup;
 	
@@ -36,7 +36,7 @@ void	*south_texture(char *str, int i, t_vars *cub)
 	return (dup);
 }
 
-void	*west_texture(char *str, int i, t_vars *cub)
+char	*west_texture(char *str, int i, t_vars *cub)
 {
 	char	*dup;
 
@@ -48,7 +48,7 @@ void	*west_texture(char *str, int i, t_vars *cub)
 	return (dup);
 }
 
-void	*east_texture(char *str, int i, t_vars *cub)
+char	*east_texture(char *str, int i, t_vars *cub)
 {
 	char	*dup;
 
@@ -60,28 +60,46 @@ void	*east_texture(char *str, int i, t_vars *cub)
 	return (dup);
 }
 
-void	*ground_rgb(char *str, int i, t_vars *cub)
+int	ground_rgb(char *str, int i, t_vars *cub)
 {
 	char	*dup;
+	char	**rgb;
+	int		hex;
 
 	cub->count_l++;
 	while (str[i] && !(ft_isdigit(str[i])))
 		i++;
 	dup = ft_strdup(&str[i]);
+	rgb = ft_split(dup, ',');
+	free(dup);
+	hex = rgb_to_hex(rgb);
+//	free(rgb[0]);
+//	free(rgb[1]);
+//	free(rgb[2]);
+//	free(rgb);
 	// printf("%s\n", dup);
-	return (dup);
+	return (hex);
 }
 
-void	*sky_rgb(char *str, int i, t_vars *cub)
+int	sky_rgb(char *str, int i, t_vars *cub)
 {
 	char	*dup;
+	char	**rgb;
+	int		hex;
 
 	cub->count_l++;
 	while (str[i] && !(ft_isdigit(str[i])))
 		i++;
 	dup = ft_strdup(&str[i]);
+	rgb = ft_split(dup, ',');
+	free(dup);
+	hex = rgb_to_hex(rgb);
+//	free(rgb[0]);
+//	free(rgb[1]);
+//	free(rgb[2]);
+//	free(rgb);
 	// printf("%s\n", dup);
-	return (dup);
+	return (hex);
 }
 
 int	sorting_data(char **map, t_vars *cub)
@@ -234,7 +252,9 @@ int main(int ac, char **av)
 	game.img.img = mlx_new_image(game.mlx, 640, 480);
 	game.img.data = (int *)mlx_get_data_addr(game.img.img, &game.img.bpp, &game.img.size_l, &game.img.endian);
 	render_frame(game);
-	mlx_hook(game.mlx_win, 2, 1L<<0, player_move, &game);
+	mlx_hook(game.mlx_win, 2, 1L<<0, &player_move_press, &game);
+	mlx_hook(game.mlx_win, 3, 1L<<1, &player_move_release, &game);
+	mlx_loop_hook(game.mlx, &player_move, &game);
 	mlx_loop(game.mlx);
 
 /*----------------------------------------------------------*/

@@ -7,6 +7,7 @@ SRCS		=	main.c\
 				parsing_2.c\
 				utils.c\
 				raycasting.c\
+				hexa.c\
 
 SRC_BASENAME    =	$(addprefix $(SRC_DIR), $(SRCS))
 OBJS            =	$(SRC_BASENAME:.c=.o)
