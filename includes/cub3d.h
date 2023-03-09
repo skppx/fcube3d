@@ -109,5 +109,6 @@ int		player_move_press(int keycode, t_game *game);
 int		player_move_release(int keycode, t_game *game);
 void	find_pos(t_vars *cub, t_game *game);
 int		rgb_to_hex(char **rgb);
+void	get_pole(t_vars *cub, t_game *game);
 
 #endif

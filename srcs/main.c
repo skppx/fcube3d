@@ -219,11 +219,12 @@ int main(int ac, char **av)
 
 //	game.posX = 7;
 //	game.posY = 2;
-	game.dirX = -1;
-	game.dirY = 0;
-	game.planeX = 0;
-	game.planeY = 0.66;
+//	game.dirX = -1;
+//	game.dirY = 0;
+//	game.planeX = 0;
+//	game.planeY = 0.66;
 	find_pos(&cub, &game);
+	get_pole(&cub, &game);
 	game.cub = &cub;
 
 	game.mlx = mlx_init();
