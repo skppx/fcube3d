@@ -23,6 +23,24 @@
 # include <math.h>
 # include <../minilibx-linux/mlx.h>
 
+typedef struct s_frame
+{
+	int		texy;
+	int		color;
+	double	step;
+	double	texpos;
+	int		texx;
+	double	wallx;
+	int		drawend;
+	int		lineheight;
+	int		drawstart;
+	double	perpwalldist;
+	int		stepx;
+	int		stepy;
+	int		hit;
+	int		side;
+}		t_frame;
+
 typedef struct s_img
 {
 	void	*img;
@@ -110,5 +128,22 @@ int		player_move_release(int keycode, t_game *game);
 void	find_pos(t_vars *cub, t_game *game);
 int		rgb_to_hex(char **rgb);
 void	get_pole(t_vars *cub, t_game *game);
+void	rotate_right(t_game *game);
+void	rotate_left(t_game *game);
+void	move_left(t_game *game);
+void	move_right(t_game *game);
+void	move_backward(t_game *game);
+void	move_forward(t_game *game);
+void	set_north(t_game *game);
+void	set_east(t_game *game);
+void	set_south(t_game *game);
+void	set_west(t_game *game);
+void	draw_sky_floor(t_game *game);
+void	set_render_frame(t_game *game, int x);
+void	set2_render_frame(t_game *game, t_frame *frame);
+void	side_hit(t_game *game, t_frame *frame);
+void	set3_render_frame(t_game *game, t_frame *frame);
+void	choose_texture(t_game *game, t_frame *frame, int x, int y);
+void	perp_wall_dist(t_game *game, t_frame *frame);
 
 #endif

@@ -8,6 +8,11 @@ SRCS		=	main.c\
 				utils.c\
 				raycasting.c\
 				hexa.c\
+				move.c\
+				move2.c\
+				pole.c\
+				draw.c\
+				render_frame_utils.c\
 
 SRC_BASENAME    =	$(addprefix $(SRC_DIR), $(SRCS))
 OBJS            =	$(SRC_BASENAME:.c=.o)
